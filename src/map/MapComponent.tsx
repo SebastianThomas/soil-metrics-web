@@ -43,15 +43,15 @@ function MapComponent({clickInfo, setClickInfo} : any) {
                   "get",
                   "rank"
                 ],
-                5,
+                1,
                 "#c33", // red 
-                4,
+                2,
                 "#f93", // orange
                 3,
                 "#fc6", // yellow
-                2,    
+                4,    
                 "#cc3", //light green
-                1,
+                5,
                 "#3c3", //green
                 "rgba(255, 255, 255, 0)",
               ],
@@ -92,15 +92,15 @@ function MapComponent({clickInfo, setClickInfo} : any) {
                           "get",
                           "rank"
                         ],
-                        5,
+                        1,
                         "#c33", // red 
-                        4,
+                        2,
                         "#f93", // orange
                         3,
                         "#fc6", // yellow
-                        2,    
+                        4,    
                         "#cc3", //light green
-                        1,
+                        5,
                         "#3c3", //green
                         "rgba(255, 255, 255, 0)",
                       ],
