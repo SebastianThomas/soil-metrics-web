@@ -48,7 +48,24 @@ function MapComponent() {
                     type: "fill",
                     source: 'source-overlay',
                     paint: {
-                      "fill-color": "#088",
+                      "fill-color": [
+                        "match",
+                        [
+                          "get",
+                          "landUse"
+                        ],
+                        "Open Shrublands",
+                        "#080",
+                        "Grasslands",
+                        "#0c5",
+                        "Croplands",
+                        "#944",
+                        "Urban and Built-up Lands",
+                        "#666",
+                        "Barren",
+                        "#000",
+                        "#088",
+                      ],
                       "fill-opacity": 0.5,
                       "fill-outline-color": "#000",
                     },
