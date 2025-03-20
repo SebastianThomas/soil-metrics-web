@@ -10,9 +10,12 @@ type ClickInfo = { lng: number; lat: number; firstLayer: any; }
 function App() {
   const [clickInfo, setClickInfo] = useState<ClickInfo | null>(null);
   const [chartData, setChartData] = useState(new Map());
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if(clickInfo) {
+      console.log('loading');
+      setLoading(true);
       let nwMap = new Map();
       fetch(`https://start-hack-ws-dev.sthomas.ch/v1/point-data?x=${clickInfo?.lng}&y=${clickInfo?.lat}`)
       .then((res) => res.json())
@@ -33,6 +36,7 @@ function App() {
       })
       .finally(() =>{  
         setChartData(nwMap);
+        setLoading(false);
       })
     }
   }, [clickInfo]);
@@ -43,7 +47,7 @@ function App() {
       <div className="column">
         <MapComponent clickInfo={clickInfo} setClickInfo = {setClickInfo}/>
       </div>
-      <div className="column"><Diagram chartData = {chartData}/></div>
+      <div className="column"><Diagram chartData = {chartData} isLoading = {isLoading}/></div>
     </>
   )
 }
