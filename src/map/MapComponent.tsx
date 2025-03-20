@@ -1,16 +1,16 @@
 //import * as React from 'react';
 import '../App.css';
-import maplibregl,{ MapMouseEvent} from "maplibre-gl";
+import maplibregl, { MapMouseEvent } from "maplibre-gl";
 import React, { useState, useEffect, useRef } from "react";
 import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
 
 
 
-function MapComponent({clickInfo, setClickInfo} : any) {
+function MapComponent({ clickInfo, setClickInfo }: any) {
 
     const [mapStyle, setMapStyle] = useState(null);
 
-    
+
     type MapInfo = { map_arg: MapMouseEvent; };
     type Year_index = { index_year: number | null; };
 
@@ -23,7 +23,7 @@ function MapComponent({clickInfo, setClickInfo} : any) {
 
     const handleMapLoad = (event: MapEvent) => {
         const map = event.target;
-        setIndexInfo({index_year: (YEARS.length-1)});
+        setIndexInfo({ index_year: (YEARS.length - 1) });
         const layer = map.getLayer('district-layer');
         if (layer) {
             setClickInfo({ lng: 0, lat: 0, firstLayer: layer });
@@ -31,33 +31,33 @@ function MapComponent({clickInfo, setClickInfo} : any) {
         setMapInfo({ map_arg: event as MapLayerMouseEvent });
         map.addSource('source-overlay', {
             type: "geojson",
-            data: geojsonData[YEARS[(YEARS.length -1)]],
+            data: geojsonData[YEARS[(YEARS.length - 1)]],
         });
         map.addLayer({
             id: 'layer-overlay',
             type: "fill",
             source: 'source-overlay',
             paint: {
-              "fill-color": [
-                "match",
-                [
-                  "get",
-                  "rank"
+                "fill-color": [
+                    "match",
+                    [
+                        "get",
+                        "rank"
+                    ],
+                    1,
+                    "#c33", // red 
+                    2,
+                    "#f93", // orange
+                    3,
+                    "#fc6", // yellow
+                    4,
+                    "#cc3", //light green
+                    5,
+                    "#3c3", //green
+                    "rgba(255, 255, 255, 0)",
                 ],
-                1,
-                "#c33", // red 
-                2,
-                "#f93", // orange
-                3,
-                "#fc6", // yellow
-                4,    
-                "#cc3", //light green
-                5,
-                "#3c3", //green
-                "rgba(255, 255, 255, 0)",
-              ],
-              "fill-opacity": 0.8
-              //"fill-outline-color": "#FFF",
+                "fill-opacity": 0.8
+                //"fill-outline-color": "#FFF",
             },
         });
 
@@ -65,13 +65,13 @@ function MapComponent({clickInfo, setClickInfo} : any) {
 
     const [geojsonData, setGeojsonData] = useState<Record<number, string>>({});
     const geoLoaded = useRef(false)
-   
+
 
 
     const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const index = parseInt(event.target.value, 10);
         setIndexInfo({ index_year: index });
-    
+
         if (mapinfo && geojsonData[YEARS[index]]) {
             const mapFrame = mapinfo.map_arg.target;
             const source = mapFrame.getSource('source-overlay') as maplibregl.GeoJSONSource;
@@ -87,26 +87,26 @@ function MapComponent({clickInfo, setClickInfo} : any) {
                     type: "fill",
                     source: 'source-overlay',
                     paint: {
-                      "fill-color": [
-                        "match",
-                        [
-                          "get",
-                          "rank"
+                        "fill-color": [
+                            "match",
+                            [
+                                "get",
+                                "rank"
+                            ],
+                            1,
+                            "#c33", // red 
+                            2,
+                            "#f93", // orange
+                            3,
+                            "#fc6", // yellow
+                            4,
+                            "#cc3", //light green
+                            5,
+                            "#3c3", //green
+                            "rgba(255, 255, 255, 0)",
                         ],
-                        1,
-                        "#c33", // red 
-                        2,
-                        "#f93", // orange
-                        3,
-                        "#fc6", // yellow
-                        4,    
-                        "#cc3", //light green
-                        5,
-                        "#3c3", //green
-                        "rgba(255, 255, 255, 0)",
-                      ],
-                      "fill-opacity": 0.8
-                      //"fill-outline-color": "#FFF",
+                        "fill-opacity": 0.8
+                        //"fill-outline-color": "#FFF",
                     },
                 });
             }
@@ -126,7 +126,7 @@ function MapComponent({clickInfo, setClickInfo} : any) {
         const feature = event.target.queryRenderedFeatures(event.point)[0];
         console.log("features: ", feature);
 
-        
+
     };
 
 
@@ -137,7 +137,7 @@ function MapComponent({clickInfo, setClickInfo} : any) {
             .then((data) => setMapStyle(data))
             .catch((error) => console.error("Error loading style:", error));
 
-        if(!geoLoaded.current) {
+        if (!geoLoaded.current) {
             geoLoaded.current = true;
             YEARS.forEach(year => {
                 fetch(`https://start-hack-public-dev.sthomas.ch/gpp-ranking-${year}.geojson`) // gpp-ranking-YEAR.geojson
@@ -149,7 +149,7 @@ function MapComponent({clickInfo, setClickInfo} : any) {
 
 
         }
-        
+
     }, []);
 
 
@@ -166,23 +166,23 @@ function MapComponent({clickInfo, setClickInfo} : any) {
                     zoom: 6.2,
                 }}
                 style={{ width: '80%', height: 500, overflow: 'hidden' }}
-                
+
                 mapStyle={mapStyle}
                 attributionControl={false}
                 onClick={handleMapClick}
                 onLoad={handleMapLoad}
             />
-             <label className="text" > {YEARS[index_info && index_info.index_year !== null ? index_info.index_year : 0]}</label>
-                <input
-                    type="range"
-                    min="0"
-                    className='slider'
-                    max={YEARS.length - 1}
-                    defaultValue={index_info && index_info.index_year !== null ? index_info.index_year : (YEARS.length - 1)}
-                    onChange={handleRangeChange}
-                />
-            
-            
+            <label className="text" > {YEARS[index_info && index_info.index_year !== null ? index_info.index_year : 0]}</label>
+            <input
+                type="range"
+                min="0"
+                className='slider'
+                max={YEARS.length - 1}
+                defaultValue={index_info && index_info.index_year !== null ? index_info.index_year : (YEARS.length - 1)}
+                onChange={handleRangeChange}
+            />
+
+
         </>
     )
 
