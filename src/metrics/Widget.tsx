@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, CSSProperties } from "react"
 import { LChart, BChart } from './Charts.tsx'
+import "../App.css"
 import ClipLoader from "react-spinners/ClipLoader";
 import './Widget.css'
-import "../App.css"
 
 const chartFuncs = {
   'climate precipitation': 'CLIMATE_PRECIPITATION',
@@ -10,6 +10,8 @@ const chartFuncs = {
   //'land cover type' : 'LCT',
   'gross primary product': 'GP'
 }
+
+
 
 
 
@@ -61,4 +63,7 @@ function Widget({ chartData, isLoading }: any) {
 }
 
 export default Widget;
+
+
+
 
