@@ -1,11 +1,11 @@
 import Widget from './Widget'
 
-function Diagram({chartData} : any) {
+function Diagram({chartData, isLoading} : any) {
     return (
         <>
         <h2>ein lustiges Diagram</h2>
-        <Widget chartData = {chartData}/>
-        <Widget chartData = {chartData}/>
+        <Widget chartData = {chartData} isLoading = {isLoading}/>
+        <Widget chartData = {chartData} isLoading = {isLoading}/>
         </>
     )
 }
