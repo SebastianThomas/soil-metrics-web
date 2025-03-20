@@ -43,7 +43,7 @@ function App() {
 
   return (
     <>
-      <h1>ein unglaubliches Dashboard</h1>
+      <h1 className="text" style={{textAlign: 'center'}}>Dashboard Soil Metrics</h1>
       <div className="column">
         <MapComponent clickInfo={clickInfo} setClickInfo = {setClickInfo}/>
       </div>

@@ -1,5 +1,6 @@
 //import * as React from 'react';
-import maplibregl,{MapMouseEvent} from "maplibre-gl";
+import '../App.css';
+import maplibregl,{ MapMouseEvent} from "maplibre-gl";
 import React, { useState, useEffect, useRef } from "react";
 import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
 
@@ -157,37 +158,31 @@ function MapComponent({clickInfo, setClickInfo} : any) {
 
     return (
         <>
-            <h2>Assaba</h2>
+            <h4 className="text">Region Assaba</h4>
             <Map
                 initialViewState={{ // 16.60504099204053, -11.79772412619621
                     longitude: -11.79772412619621,
                     latitude: 16.60504099204053,
-                    zoom: 6.2
+                    zoom: 6.2,
                 }}
                 style={{ width: '80%', height: 500, overflow: 'hidden' }}
+                
                 mapStyle={mapStyle}
                 attributionControl={false}
                 onClick={handleMapClick}
                 onLoad={handleMapLoad}
             />
-            <h2>Clicked on
-                {clickInfo && (
-                    <div>
-                        <p>Clicked at: Longitude {clickInfo.lng}, Latitude {clickInfo.lat}</p>
-                        {clickInfo && <p>First Layer ID: {clickInfo.firstLayer.feature}</p>}
-                    </div>
-                )}
-            </h2>
-            <div className="special_div">
-                <label>Time Line Year {YEARS[index_info && index_info.index_year !== null ? index_info.index_year : 0]}</label>
+             <label className="text" > {YEARS[index_info && index_info.index_year !== null ? index_info.index_year : 0]}</label>
                 <input
                     type="range"
                     min="0"
+                    className='slider'
                     max={YEARS.length - 1}
                     defaultValue={index_info && index_info.index_year !== null ? index_info.index_year : (YEARS.length - 1)}
                     onChange={handleRangeChange}
                 />
-            </div>
+            
+            
         </>
     )
 
