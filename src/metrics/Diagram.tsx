@@ -5,6 +5,7 @@ function Diagram() {
         <>
         <h2>ein lustiges Diagram</h2>
         <Widget />
+        <Widget />
         </>
     )
 }

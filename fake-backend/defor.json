@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Landing",
+        "uv": 10234,
+        "pv": 5421,
+        "amt": 7500
+    },
+    {
+        "name": "Dashboard",
+        "uv": 8765,
+        "pv": 6543,
+        "amt": 6200
+    },
+    {
+        "name": "Profile",
+        "uv": 4567,
+        "pv": 3210,
+        "amt": 4000
+    },
+    {
+        "name": "Settings",
+        "uv": 3120,
+        "pv": 2100,
+        "amt": 2800
+    },
+    {
+        "name": "Support",
+        "uv": 5690,
+        "pv": 4320,
+        "amt": 5100
+    },
+    {
+        "name": "Blog",
+        "uv": 7430,
+        "pv": 6780,
+        "amt": 5900
+    },
+    {
+        "name": "Contact",
+        "uv": 2300,
+        "pv": 1875,
+        "amt": 1600
+    }
+]
