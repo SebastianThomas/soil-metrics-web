@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react"
 import {LChart, BChart} from './Charts.tsx'
+import "../App.css"
 
 const chartFuncs = {
   'climate precipitation' : 'CLIMATE_PRECIPITATION', 
@@ -15,12 +16,15 @@ function Widget({chartData} : any) {
 
     return (
         <div className = "widget">
+            <div className="select">
             <select value = {type}
+            
             onChange = {e => setType(e.target.value)}>
                 {Object.entries(chartFuncs).map(([key, value]) => 
                   <option key={value} value={value}>{key}</option>
                 )}
             </select>
+            </div>
             {type == 'LCT' ? <BChart data = {chartData.get(type)}/> : <LChart data = {chartData.get(type)}/>}
         </div>
     );
