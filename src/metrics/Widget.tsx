@@ -1,4 +1,4 @@
-import {useState, useEffect, CSSProperties} from "react"
+import {useState, useEffect} from "react"
 import {LChart, BChart} from './Charts.tsx'
 import "../App.css"
 import ClipLoader from "react-spinners/ClipLoader";
