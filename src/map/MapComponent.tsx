@@ -158,30 +158,33 @@ function MapComponent({ clickInfo, setClickInfo }: any) {
 
     return (
         <>
-            <h4 className="text">Region Assaba</h4>
-            <Map
-                initialViewState={{ // 16.60504099204053, -11.79772412619621
-                    longitude: -11.79772412619621,
-                    latitude: 16.60504099204053,
-                    zoom: 6.2,
-                }}
-                style={{ width: '80%', height: 500, overflow: 'hidden' }}
+            <div className='belowMap' >
+                <h4 className="text">Region Assaba</h4>
 
-                mapStyle={mapStyle}
-                attributionControl={false}
-                onClick={handleMapClick}
-                onLoad={handleMapLoad}
-            />
-            <label className="text" > {YEARS[index_info && index_info.index_year !== null ? index_info.index_year : 0]}</label>
-            <input
-                type="range"
-                min="0"
-                className='slider'
-                max={YEARS.length - 1}
-                defaultValue={index_info && index_info.index_year !== null ? index_info.index_year : (YEARS.length - 1)}
-                onChange={handleRangeChange}
-            />
+                <Map
+                    initialViewState={{ // 16.60504099204053, -11.79772412619621
+                        longitude: -11.79772412619621,
+                        latitude: 16.60504099204053,
+                        zoom: 6.2,
+                    }}
+                    style={{ width: '90%', height: '450px', overflow: 'hidden' }}
 
+                    mapStyle={mapStyle}
+                    attributionControl={false}
+                    onClick={handleMapClick}
+                    onLoad={handleMapLoad}
+                />
+
+                <label className="text" > {YEARS[index_info && index_info.index_year !== null ? index_info.index_year : 0]}</label>
+                <input
+                    type="range"
+                    min="0"
+                    className='slider'
+                    max={YEARS.length - 1}
+                    defaultValue={index_info && index_info.index_year !== null ? index_info.index_year : (YEARS.length - 1)}
+                    onChange={handleRangeChange}
+                />
+            </div>
 
         </>
     )

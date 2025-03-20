@@ -67,6 +67,12 @@ select {
     color: var(--color4);
   }
 
+  .belowMap{
+    align-items: center;
+    
+    display: flex;
+    flex-direction: column;
+  }
 
 
 
