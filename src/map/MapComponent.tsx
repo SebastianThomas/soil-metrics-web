@@ -102,7 +102,7 @@ function MapComponent() {
         if(!geoLoaded.current) {
             geoLoaded.current = true;
             YEARS.forEach(year => {
-                fetch(`https://start-hack-public-dev.sthomas.ch/gp-${year}.geojson`)
+                fetch(`https://start-hack-public-dev.sthomas.ch/lct-${year}.geojson`)
                     .then(res => res.json())
                     .then(data => setGeojsonData(prev => ({ ...prev, [year]: data })))
                     .then(data => console.log(`loaded ${year}`))
