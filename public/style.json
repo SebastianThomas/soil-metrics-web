@@ -18,6 +18,10 @@
     "districts": {
       "type": "geojson",
       "data": "https://start-hack-public-dev.sthomas.ch/districts.geojson"
+    },
+    "waterways": {
+      "type": "geojson",
+      "data": "https://start-hack-public-dev.sthomas.ch/assaba-waterways.geojson"
     }
   },
   "sprite": "https://openmaptiles.github.io/maptiler-basic-gl-style/sprite",
@@ -824,8 +828,16 @@
       "type": "fill",
       "source": "districts",
       "paint": {
-        "fill-color": "rgba(254, 255, 222, 1)",
+        "fill-color": "rgba(254, 255, 222, 0.9)",
         "fill-outline-color": "rgba(0, 0, 0, 1)"
+      }
+    },
+    {
+      "id": "waterway-layer",
+      "type": "line",
+      "source": "waterways",
+      "paint": {
+        "line-color": "rgba(100, 100, 255, 1)"
       }
     }
   ],
