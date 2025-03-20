@@ -11,7 +11,7 @@ function MapComponent() {
 
     type ClickInfo = { lng: number; lat: number; firstLayer: any;} 
     type MapInfo = { map_arg: MapMouseEvent;};
-    type Year_index = { index_year: 0 | null;};
+    type Year_index = { index_year: number | null;};
 
     
     const [mapinfo, setMapInfo] = useState<MapInfo | null>(null);
@@ -32,6 +32,7 @@ function MapComponent() {
 
     const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const index = parseInt((event.target as HTMLInputElement).value, 10);
+        setIndexInfo({index_year: index});
         if (mapinfo != null) {
             const mapFrame = mapinfo.map_arg.target
             if(mapFrame.isSourceLoaded('source-overlay')){
