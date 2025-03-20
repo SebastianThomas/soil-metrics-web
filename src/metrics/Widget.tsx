@@ -1,8 +1,9 @@
-import { useState, useEffect, CSSProperties } from "react"
+import { useState, useEffect } from "react"
 import { LChart, BChart } from './Charts.tsx'
 import "../App.css"
 import ClipLoader from "react-spinners/ClipLoader";
 import './Widget.css'
+import "../App.css"
 
 const chartFuncs = {
   'climate precipitation': 'CLIMATE_PRECIPITATION',
@@ -51,7 +52,6 @@ function Widget({ chartData, isLoading }: any) {
             ))}
           </select>
         </div>
-
         {type === "LCT" ? (
           <BChart data={chartData.get(type)} />
         ) : (
