@@ -1,5 +1,5 @@
 //import * as React from 'react';
-import { Color, MapMouseEvent } from "maplibre-gl";
+import { MapMouseEvent } from "maplibre-gl";
 import React, { useState, useEffect, useRef } from "react";
 import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
 
@@ -105,7 +105,7 @@ function MapComponent() {
                 fetch(`https://start-hack-public-dev.sthomas.ch/lct-${year}.geojson`)
                     .then(res => res.json())
                     .then(data => setGeojsonData(prev => ({ ...prev, [year]: data })))
-                    .then(data => console.log(`loaded ${year}`))
+                    .then(_data => console.log(`loaded ${year}`))
                     .catch(err => console.error(`Failed to load ${year}`, err));
             });
 
