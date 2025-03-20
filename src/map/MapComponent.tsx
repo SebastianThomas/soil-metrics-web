@@ -1,7 +1,7 @@
 //import * as React from 'react';
 import { Color, MapMouseEvent } from "maplibre-gl";
 import React, { useState, useEffect, useRef } from "react";
-import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
+import Map, { MapEvent, Popup ,MapLayerMouseEvent } from 'react-map-gl/maplibre';
 
 
 
@@ -17,6 +17,7 @@ function MapComponent() {
     const [mapinfo, setMapInfo] = useState<MapInfo | null>(null);
     const [clickInfo, setClickInfo] = useState<ClickInfo | null>(null);
     const [index_info, setIndexInfo] = useState<Year_index>();
+    const [popupInfo, setPopupInfo] = useState<{ latitude: 0; longitude: 0 }| null>(null);
 
     const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
@@ -91,6 +92,7 @@ function MapComponent() {
         console.log("First Layer:", firstLayer);
         const feature = event.target.queryRenderedFeatures(event.point)[0];
         console.log("features: ", feature);
+        //setPopupInfo({latitude: lng, longitude: lat})
     };
 
     useEffect(() => {
@@ -102,7 +104,7 @@ function MapComponent() {
         if(!geoLoaded.current) {
             geoLoaded.current = true;
             YEARS.forEach(year => {
-                fetch(`https://start-hack-public-dev.sthomas.ch/lct-${year}.geojson`)
+                fetch(`https://start-hack-public-dev.sthomas.ch/lct-${year}.geojson`) // gpp-ranking-YEAR.geojson // https://start-hack-public-dev.sthomas.ch/lct-${year}.geojson
                     .then(res => res.json())
                     .then(data => setGeojsonData(prev => ({ ...prev, [year]: data })))
                     .then(data => console.log(`loaded ${year}`))
@@ -132,8 +134,17 @@ function MapComponent() {
                 attributionControl={false}
                 onClick={handleMapClick}
                 onLoad={handleMapLoad}
-
-            />
+            > 
+            {popupInfo && (
+                <Popup
+                    latitude={popupInfo.latitude}
+                    longitude={popupInfo.longitude}
+                    onClose={() => setPopupInfo(null)} // Close the popup when clicked
+                >
+                    <div>Popup Content</div>
+                </Popup>
+            )}
+            </Map>
             <h2>Clicked on
                 {clickInfo && (
                     <div>
