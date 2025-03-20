@@ -1,33 +1,27 @@
 import {useState, useEffect} from "react"
 import LChart from './Charts.tsx'
 
+const chartFuncs = {
+  'climate precipitation' : 'CLIMATE_PRECIPITATION',
+  'population density' : 'POPULATION_DENSITY',
+  'land cover type' : 'LCT',
+  'gross primary product' : 'GP'
+}
 
-function Widget() {
-    const [type, setType] = useState("rain");
-    const [data, setData] = useState(null)
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch(`/fake-backend/${type}.json`);
-            const result = await response.json();
-            setData(result);
-          } catch (error) {
-            console.error(`Error fetching data in /fake-backend/${type}.json:`, error);
-          }
-        };
-    
-        fetchData();
-      }, [type]); // Runs when selectedValue changes
+function Widget({chartData} : any) {
+    const [type, setType] = useState('CLIMATE_PRECIPITATION');
+
 
     return (
         <div className = "widget">
             <select value = {type}
             onChange = {e => setType(e.target.value)}>
-                <option value="rain">Rain</option>
-                <option value="defor">Deforestation</option>
+                {Object.entries(chartFuncs).map(([key, value]) => 
+                  <option key={value} value={value}>{key}</option>
+                )}
             </select>
-            <LChart data = {data}/>
+            <LChart data = {chartData.get(type)}/>
         </div>
     );
 }

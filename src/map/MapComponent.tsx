@@ -1,21 +1,21 @@
 //import * as React from 'react';
-import { Color, MapMouseEvent } from "maplibre-gl";
+import maplibregl,{ Color, MapMouseEvent} from "maplibre-gl";
 import React, { useState, useEffect, useRef } from "react";
-import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
+import Map, { MapEvent, MapLayerMouseEvent, MapGeoJSONFeature } from 'react-map-gl/maplibre';
 
 
 
-function MapComponent() {
+function MapComponent({clickInfo, setClickInfo} : any) {
 
     const [mapStyle, setMapStyle] = useState(null);
 
-    type ClickInfo = { lng: number; lat: number; firstLayer: any; }
+    
     type MapInfo = { map_arg: MapMouseEvent; };
     type Year_index = { index_year: number | null; };
 
 
     const [mapinfo, setMapInfo] = useState<MapInfo | null>(null);
-    const [clickInfo, setClickInfo] = useState<ClickInfo | null>(null);
+
     const [index_info, setIndexInfo] = useState<Year_index>();
 
     const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
@@ -32,6 +32,7 @@ function MapComponent() {
 
     const [geojsonData, setGeojsonData] = useState<Record<number, string>>({});
     const geoLoaded = useRef(false)
+   
 
 
     const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,7 +92,15 @@ function MapComponent() {
         console.log("First Layer:", firstLayer);
         const feature = event.target.queryRenderedFeatures(event.point)[0];
         console.log("features: ", feature);
+
+        
     };
+
+    const popup = new maplibregl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
 
     useEffect(() => {
         fetch("/basic.json") // Load JSON from public folder
@@ -132,7 +141,6 @@ function MapComponent() {
                 attributionControl={false}
                 onClick={handleMapClick}
                 onLoad={handleMapLoad}
-
             />
             <h2>Clicked on
                 {clickInfo && (
