@@ -13,7 +13,7 @@
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url": "https://api.maptiler.com/tiles/v3-openmaptiles/tiles.json?key=5jB0WXzRv42oConGQU9l"
+      "url": "https://api.maptiler.com/tiles/v3-openmaptiles/tiles.json?key=y3igdQT77kWlb3K8Kk2T"
     },
     "districts": {
       "type": "geojson",
@@ -25,7 +25,7 @@
     }
   },
   "sprite": "https://openmaptiles.github.io/maptiler-basic-gl-style/sprite",
-  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=5jB0WXzRv42oConGQU9l",
+  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=y3igdQT77kWlb3K8Kk2T",
   "layers": [
     {
       "id": "background",
