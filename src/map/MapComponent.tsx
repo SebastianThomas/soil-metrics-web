@@ -126,7 +126,7 @@ function MapComponent() {
     };
 
     useEffect(() => {
-        fetch("/basic.json") // Load JSON from public folder
+        fetch("/style.json")
             .then((response) => response.json())
             .then((data) => setMapStyle(data))
             .catch((error) => console.error("Error loading style:", error));
