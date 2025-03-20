@@ -17,7 +17,7 @@ function MapComponent() {
     const [mapinfo, setMapInfo] = useState<MapInfo | null>(null);
     const [clickInfo, setClickInfo] = useState<ClickInfo | null>(null);
     const [index_info, setIndexInfo] = useState<Year_index>();
-    const [popupInfo, setPopupInfo] = useState<{ latitude: 0; longitude: 0 }| null>(null);
+    const [popupInfo, setPopupInfo] = useState<{ latitude: number; longitude: number }| null>(null);
 
     const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
@@ -92,7 +92,7 @@ function MapComponent() {
         console.log("First Layer:", firstLayer);
         const feature = event.target.queryRenderedFeatures(event.point)[0];
         console.log("features: ", feature);
-        //setPopupInfo({latitude: lng, longitude: lat})
+        setPopupInfo({latitude: lat, longitude: lng})
     };
 
     useEffect(() => {
@@ -139,6 +139,7 @@ function MapComponent() {
                 <Popup
                     latitude={popupInfo.latitude}
                     longitude={popupInfo.longitude}
+                    style={{transform: 'initial'}}
                     onClose={() => setPopupInfo(null)} // Close the popup when clicked
                 >
                     <div>Popup Content</div>
@@ -152,6 +153,9 @@ function MapComponent() {
                         {clickInfo && <p>First Layer ID: {clickInfo.firstLayer.feature}</p>}
                     </div>
                 )}
+                {
+                    <div>PopupInfo: {popupInfo?.latitude} {popupInfo?.longitude}</div>
+                }
             </h2>
             <div className="special_div">
                 <label>Time Line Year {YEARS[index_info && index_info.index_year !== null ? index_info.index_year : 0]}</label>
