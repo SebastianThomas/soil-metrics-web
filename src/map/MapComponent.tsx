@@ -22,12 +22,44 @@ function MapComponent() {
 
     const handleMapLoad = (event: MapEvent) => {
         const map = event.target;
-
+        setIndexInfo({index_year: (YEARS.length-1)});
         const layer = map.getLayer('district-layer');
         if (layer) {
             setClickInfo({ lng: 0, lat: 0, firstLayer: layer });
         }
         setMapInfo({ map_arg: event as MapLayerMouseEvent });
+        map.addSource('source-overlay', {
+            type: "geojson",
+            data: geojsonData[YEARS[(YEARS.length -1)]],
+        });
+        map.addLayer({
+            id: 'layer-overlay',
+            type: "fill",
+            source: 'source-overlay',
+            paint: {
+              "fill-color": [
+                "match",
+                [
+                  "get",
+                  "rank"
+                ],
+                5,
+                "#c33", // red 
+                4,
+                "#f93", // orange
+                3,
+                "#fc6", // yellow
+                2,    
+                "#cc3", //light green
+                1,
+                "#3c3", //green
+                "rgba(255, 255, 255, 0)",
+              ],
+              "fill-opacity": 0.8
+              //"fill-outline-color": "#FFF",
+            },
+        });
+
     }
 
     const [geojsonData, setGeojsonData] = useState<Record<number, string>>({});
@@ -69,7 +101,7 @@ function MapComponent() {
                         "#cc3", //light green
                         1,
                         "#3c3", //green
-                        "#111",
+                        "rgba(255, 255, 255, 0)",
                       ],
                       "fill-opacity": 0.8
                       //"fill-outline-color": "#FFF",
@@ -148,7 +180,7 @@ function MapComponent() {
                     type="range"
                     min="0"
                     max={YEARS.length - 1}
-
+                    defaultValue={index_info && index_info.index_year !== null ? index_info.index_year : (YEARS.length - 1)}
                     onChange={handleRangeChange}
                 />
             </div>
