@@ -22,12 +22,44 @@ function MapComponent({clickInfo, setClickInfo} : any) {
 
     const handleMapLoad = (event: MapEvent) => {
         const map = event.target;
-
+        setIndexInfo({index_year: (YEARS.length-1)});
         const layer = map.getLayer('district-layer');
         if (layer) {
             setClickInfo({ lng: 0, lat: 0, firstLayer: layer });
         }
         setMapInfo({ map_arg: event as MapLayerMouseEvent });
+        map.addSource('source-overlay', {
+            type: "geojson",
+            data: geojsonData[YEARS[(YEARS.length -1)]],
+        });
+        map.addLayer({
+            id: 'layer-overlay',
+            type: "fill",
+            source: 'source-overlay',
+            paint: {
+              "fill-color": [
+                "match",
+                [
+                  "get",
+                  "rank"
+                ],
+                5,
+                "#c33", // red 
+                4,
+                "#f93", // orange
+                3,
+                "#fc6", // yellow
+                2,    
+                "#cc3", //light green
+                1,
+                "#3c3", //green
+                "rgba(255, 255, 255, 0)",
+              ],
+              "fill-opacity": 0.8
+              //"fill-outline-color": "#FFF",
+            },
+        });
+
     }
 
     const [geojsonData, setGeojsonData] = useState<Record<number, string>>({});
@@ -58,22 +90,22 @@ function MapComponent({clickInfo, setClickInfo} : any) {
                         "match",
                         [
                           "get",
-                          "landUse"
+                          "rank"
                         ],
-                        "Open Shrublands",
-                        "#080",
-                        "Grasslands",
-                        "#0c5",
-                        "Croplands",
-                        "#944",
-                        "Urban and Built-up Lands",
-                        "#666",
-                        "Barren",
-                        "#000",
-                        "#088",
+                        5,
+                        "#c33", // red 
+                        4,
+                        "#f93", // orange
+                        3,
+                        "#fc6", // yellow
+                        2,    
+                        "#cc3", //light green
+                        1,
+                        "#3c3", //green
+                        "rgba(255, 255, 255, 0)",
                       ],
-                      "fill-opacity": 0.5,
-                      "fill-outline-color": "#000",
+                      "fill-opacity": 0.8
+                      //"fill-outline-color": "#FFF",
                     },
                 });
             }
@@ -103,7 +135,7 @@ function MapComponent({clickInfo, setClickInfo} : any) {
 
 
     useEffect(() => {
-        fetch("/basic.json") // Load JSON from public folder
+        fetch("/style.json")
             .then((response) => response.json())
             .then((data) => setMapStyle(data))
             .catch((error) => console.error("Error loading style:", error));
@@ -111,10 +143,10 @@ function MapComponent({clickInfo, setClickInfo} : any) {
         if(!geoLoaded.current) {
             geoLoaded.current = true;
             YEARS.forEach(year => {
-                fetch(`https://start-hack-public-dev.sthomas.ch/lct-${year}.geojson`)
+                fetch(`https://start-hack-public-dev.sthomas.ch/gpp-ranking-${year}.geojson`) // gpp-ranking-YEAR.geojson
                     .then(res => res.json())
                     .then(data => setGeojsonData(prev => ({ ...prev, [year]: data })))
-                    .then(data => console.log(`loaded ${year}`))
+                    .then(_data => console.log(`loaded ${year}`))
                     .catch(err => console.error(`Failed to load ${year}`, err));
             });
 
@@ -156,7 +188,7 @@ function MapComponent({clickInfo, setClickInfo} : any) {
                     type="range"
                     min="0"
                     max={YEARS.length - 1}
-
+                    defaultValue={index_info && index_info.index_year !== null ? index_info.index_year : (YEARS.length - 1)}
                     onChange={handleRangeChange}
                 />
             </div>
