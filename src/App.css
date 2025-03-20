@@ -1,0 +1,26 @@
+:root {
+    --color1: #829e87ff;
+    --color2: #577d74ff;
+    --color3: #3c5057ff;
+    --color4: #242c38ff;
+    --bg-color: #222433ff;
+    --font-color: #fff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--font-color);
+}
+
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.widget {
+    background: var(--color4);
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color4);
+}

@@ -6,8 +6,8 @@ function App() {
   return (
     <>
       <h1>ein unglaubliches Dashboard</h1>
-      <Map/>
-      <Diagram />
+      <div className="column"><Map/></div>
+      <div className="column"><Diagram/></div>
     </>
   )
 }

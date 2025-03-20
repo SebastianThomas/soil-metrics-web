@@ -1,6 +1,11 @@
+import Widget from './Widget'
+
 function Diagram() {
     return (
-        <h2>Und ich bin ein noch schöneres Diagram</h2>
+        <>
+        <h2>ein lustiges Diagram</h2>
+        <Widget />
+        </>
     )
 }
 
