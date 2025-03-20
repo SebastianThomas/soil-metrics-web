@@ -1,7 +1,7 @@
 //import * as React from 'react';
-import maplibregl,{ Color, MapMouseEvent} from "maplibre-gl";
+import maplibregl,{MapMouseEvent} from "maplibre-gl";
 import React, { useState, useEffect, useRef } from "react";
-import Map, { MapEvent, MapLayerMouseEvent, MapGeoJSONFeature } from 'react-map-gl/maplibre';
+import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
 
 
 
@@ -128,10 +128,6 @@ function MapComponent({clickInfo, setClickInfo} : any) {
         
     };
 
-    const popup = new maplibregl.Popup({
-        closeButton: false,
-        closeOnClick: false
-    });
 
 
     useEffect(() => {
