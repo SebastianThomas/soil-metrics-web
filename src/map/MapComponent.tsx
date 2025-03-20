@@ -57,22 +57,22 @@ function MapComponent() {
                         "match",
                         [
                           "get",
-                          "landUse"
+                          "rank"
                         ],
-                        "Open Shrublands",
-                        "#080",
-                        "Grasslands",
-                        "#0c5",
-                        "Croplands",
-                        "#944",
-                        "Urban and Built-up Lands",
-                        "#666",
-                        "Barren",
-                        "#000",
-                        "#088",
+                        5,
+                        "#c33", // red 
+                        4,
+                        "#f93", // orange
+                        3,
+                        "#fc6", // yellow
+                        2,    
+                        "#cc3", //light green
+                        1,
+                        "#3c3", //green
+                        "#111",
                       ],
-                      "fill-opacity": 0.5,
-                      "fill-outline-color": "#000",
+                      "fill-opacity": 0.8
+                      //"fill-outline-color": "#FFF",
                     },
                 });
             }
@@ -102,7 +102,7 @@ function MapComponent() {
         if(!geoLoaded.current) {
             geoLoaded.current = true;
             YEARS.forEach(year => {
-                fetch(`https://start-hack-public-dev.sthomas.ch/lct-${year}.geojson`)
+                fetch(`https://start-hack-public-dev.sthomas.ch/gpp-ranking-${year}.geojson`) // gpp-ranking-YEAR.geojson
                     .then(res => res.json())
                     .then(data => setGeojsonData(prev => ({ ...prev, [year]: data })))
                     .then(_data => console.log(`loaded ${year}`))
