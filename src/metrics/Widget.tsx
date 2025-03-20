@@ -1,10 +1,10 @@
 import {useState, useEffect} from "react"
-import LChart from './Charts.tsx'
+import {LChart, BChart} from './Charts.tsx'
 
 const chartFuncs = {
-  'climate precipitation' : 'CLIMATE_PRECIPITATION',
+  'climate precipitation' : 'CLIMATE_PRECIPITATION', 
   'population density' : 'POPULATION_DENSITY',
-  'land cover type' : 'LCT',
+  //'land cover type' : 'LCT',
   'gross primary product' : 'GP'
 }
 
@@ -21,7 +21,7 @@ function Widget({chartData} : any) {
                   <option key={value} value={value}>{key}</option>
                 )}
             </select>
-            <LChart data = {chartData.get(type)}/>
+            {type == 'LCT' ? <BChart data = {chartData.get(type)}/> : <LChart data = {chartData.get(type)}/>}
         </div>
     );
 }

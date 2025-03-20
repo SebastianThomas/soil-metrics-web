@@ -1,7 +1,6 @@
-import { LineChart, BarChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, BarChart, Rectangle, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-function LChart({data}:any) {
-  console.log("chart data:", data);
+export function LChart({data}:any) {
     return (
         <ResponsiveContainer width="100%" height={400}>
           <LineChart
@@ -26,14 +25,29 @@ function LChart({data}:any) {
       )
 }
 
-function BChart({data} : any) {
+export function BChart({data} : any) {
+  console.log("bchart:", data);
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart width={150} height={40} data={data}>
-        <Bar dataKey="uv" fill="#8884d8" />
-      </BarChart>
-    </ResponsiveContainer>
+    <ResponsiveContainer width="100%" height={400}>
+        <BarChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="time" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="data" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+        </BarChart>
+      </ResponsiveContainer>
   );
 }
 
-export default LChart
