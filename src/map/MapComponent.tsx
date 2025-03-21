@@ -76,10 +76,46 @@ function MapComponent({ setClickInfo }: any) {
         if (layer) {
             setClickInfo({ lng: 0, lat: 0, firstLayer: layer });
         }
-        
         setMapInfo({ map_arg: event as MapLayerMouseEvent });
+        const mapFrame = map;
+        
+        mapFrame.addSource('source-overlay', {
+            type: "geojson",
+            data: geojsonData[YEARS[YEARS.length-1]],
+        });
+        mapFrame.addLayer({
+            id: 'layer-overlay',
+            type: "fill",
+            source: 'source-overlay',
+            paint: {
+                "fill-color": [
+                    "match",
+                    [
+                        "get",
+                        "rank"
+                    ],
+                    1,
+                    "#c33", // red 
+                    2,
+                    "#f93", // orange
+                    3,
+                    "#fc6", // yellow
+                    4,
+                    "#cc3", //light green
+                    5,
+                    "#3c3", //green
+                    "rgba(255, 255, 255, 0)",
+                ],
+                "fill-opacity": 0.8
+                //"fill-outline-color": "#FFF",
+            },
+        });
+
+
+
         loadMapFromSource(YEARS.length - 1);
-        loadMapFromSource(YEARS.length - 1);
+
+
     }
 
     
@@ -144,9 +180,8 @@ function MapComponent({ setClickInfo }: any) {
                     .then(res => res.json())
                     .then(data => setGeojsonData(prev => ({ ...prev, [year]: data })))
                     .catch(err => console.error(`Failed to load ${year}`, err)).finally(() =>{
-                        loadMapFromSource(YEARS.length - 1)
+                        loadMapFromSource(YEARS.length - 1);
                     });
-                    loadMapFromSource(YEARS.length - 1)
             });
 
 
