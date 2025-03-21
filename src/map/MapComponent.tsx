@@ -13,6 +13,9 @@ function MapComponent({ setClickInfo }: any) {
     const [mapStyle, setMapStyle] = useState(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
 
+    const [geojsonData, setGeojsonData] = useState<Record<number, string>>({});
+    const geoLoaded = useRef(false)
+
     type MapInfo = { map_arg: MapMouseEvent; };
     type Year_index = { index_year: number | null; };
 
@@ -76,10 +79,10 @@ function MapComponent({ setClickInfo }: any) {
         
         setMapInfo({ map_arg: event as MapLayerMouseEvent });
         loadMapFromSource(YEARS.length - 1);
+        loadMapFromSource(YEARS.length - 1);
     }
 
-    const [geojsonData, setGeojsonData] = useState<Record<number, string>>({});
-    const geoLoaded = useRef(false)
+    
 
 
 
@@ -110,7 +113,7 @@ function MapComponent({ setClickInfo }: any) {
         let features = event.target.queryRenderedFeatures(event.point);
         if(features.length >= 1) {
             const risk = features[0].properties.rank;
-
+            if((risk >= 1 && risk <= 5)){
             //if (marker) marker.remove();
             markerRef.current = new maplibregl.Popup({
                 closeButton: true, closeOnClick: false, maxWidth: "100px", // Limit the width of the popup
@@ -119,7 +122,7 @@ function MapComponent({ setClickInfo }: any) {
                 .setLngLat([lng, lat]) // Marker position
                 .setHTML(`<h4 style="color: black; align: 'center' ">Risk Level ${6 - risk}</h4>`)
                 .addTo(mapRef.current); // Add marker to the map
-
+            }
             setClickInfo({ lng, lat });
         }
         
@@ -143,6 +146,7 @@ function MapComponent({ setClickInfo }: any) {
                     .catch(err => console.error(`Failed to load ${year}`, err)).finally(() =>{
                         loadMapFromSource(YEARS.length - 1)
                     });
+                    loadMapFromSource(YEARS.length - 1)
             });
 
 
