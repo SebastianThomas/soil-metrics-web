@@ -3,31 +3,33 @@ import '../App.css';
 import maplibregl, { MapMouseEvent } from "maplibre-gl";
 import React, { useState, useEffect, useRef } from "react";
 import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
-
+import "maplibre-gl/dist/maplibre-gl.css";
 
 
 function MapComponent({ clickInfo, setClickInfo }: any) {
 
     const [mapStyle, setMapStyle] = useState(null);
-
+    const mapRef = useRef<maplibregl.Map | null>(null);
 
     type MapInfo = { map_arg: MapMouseEvent; };
     type Year_index = { index_year: number | null; };
 
+   const markerRef = useRef<maplibregl.Popup | null>(null);
 
     const [mapinfo, setMapInfo] = useState<MapInfo | null>(null);
-
     const [index_info, setIndexInfo] = useState<Year_index>();
 
     const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
     const handleMapLoad = (event: MapEvent) => {
         const map = event.target;
+        mapRef.current = event.target;
         setIndexInfo({ index_year: (YEARS.length - 1) });
         const layer = map.getLayer('district-layer');
         if (layer) {
             setClickInfo({ lng: 0, lat: 0, firstLayer: layer });
         }
+        
         setMapInfo({ map_arg: event as MapLayerMouseEvent });
         map.addSource('source-overlay', {
             type: "geojson",
@@ -117,6 +119,7 @@ function MapComponent({ clickInfo, setClickInfo }: any) {
 
     // Handle map click event
     const handleMapClick = (event: MapLayerMouseEvent) => {
+        if (!mapRef.current) return;
         const firstLayer = event.target.getLayer('district-layer');
         const { lng, lat } = event.lngLat;
         setMapInfo({ map_arg: event });
@@ -125,7 +128,20 @@ function MapComponent({ clickInfo, setClickInfo }: any) {
         console.log("First Layer:", firstLayer);
         const feature = event.target.queryRenderedFeatures(event.point)[0];
         console.log("features: ", feature);
-
+        
+        if (markerRef.current) {
+            markerRef.current.remove();
+        }
+        const risk = event.target.queryRenderedFeatures(event.point)[0].properties.rank;
+      
+      //if (marker) marker.remove();
+        markerRef.current =  new maplibregl.Popup({ closeButton: true, closeOnClick: false , maxWidth: "100px", // Limit the width of the popup
+            offset: [0, -10],}) // Red marker
+            .setLngLat([lng, lat]) // Marker position
+            .setHTML(`<h4 style="color: black; align: 'center' ">Risk Level ${6-risk}</h4>`)
+            .addTo(mapRef.current); // Add marker to the map
+        
+        setClickInfo({ lng, lat });
 
     };
 

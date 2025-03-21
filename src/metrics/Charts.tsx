@@ -2,10 +2,10 @@ import { LineChart, BarChart, Rectangle, Bar, Line, XAxis, YAxis, CartesianGrid,
 
 export function LChart({data}:any) {
     return (
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={300}>
           <LineChart
-            width={500}
-            height={300}
+            width={400}
+            height={200}
             data={data}
             margin={{
               top: 5,
@@ -28,10 +28,10 @@ export function LChart({data}:any) {
 export function BChart({data} : any) {
   console.log("bchart:", data);
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={300}>
         <BarChart
-          width={500}
-          height={300}
+          width={400}
+          height={200}
           data={data}
           margin={{
             top: 5,

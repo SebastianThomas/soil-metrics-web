@@ -1,9 +1,10 @@
 .widget-container {
     position: relative;
+    margin: 0.5rem;
 }
 
 .loading-overlay {
-    border-radius: 20px;
+    border-radius: 10px;
     position: absolute;
     inset: 0;
     display: flex;

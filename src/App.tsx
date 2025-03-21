@@ -49,7 +49,7 @@ function App() {
         <MapComponent clickInfo={clickInfo} setClickInfo = {setClickInfo}/>
       </div>
       <div className="column">
-        <Diagram chartData = {chartData} isLoading = {isLoading}/>
+        <Diagram chartData = {chartData} isLoading = {isLoading} />
         {/* <AccumulatedData /> */}
       </div>
     </>

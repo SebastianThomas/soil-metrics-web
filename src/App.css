@@ -10,6 +10,7 @@
 body {
     background-color: var(--bg-color);
     color: var(--font-color);
+
 }
 .text{
     color: var(--font-color);
@@ -69,7 +70,7 @@ select {
 
   .belowMap{
     align-items: center;
-    
+
     display: flex;
     flex-direction: column;
   }
