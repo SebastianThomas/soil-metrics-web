@@ -1,4 +1,4 @@
-import { LineChart, BarChart,  Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, BarChart,  Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export function LChart({data}:any) {
     return (

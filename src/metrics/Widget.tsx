@@ -17,9 +17,9 @@ const chartFuncs = {
 
 
 
-function Widget({ chartData, isLoading }: {chartData: Map<string, {time: Date, data: any}>, isLoading: boolean}) {
+function Widget({ chartData, isLoading, startType}: {chartData: Map<string, {time: Date, data: any}>, isLoading: boolean, startType: string}) {
   const [showEffects, setShowEffects] = useState(false);
-  const [type, setType] = useState("CLIMATE_PRECIPITATION");
+  const [type, setType] = useState(startType);
 
   useEffect(() => {
     let timeout: number = 0;
