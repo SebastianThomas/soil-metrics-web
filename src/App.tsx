@@ -1,6 +1,7 @@
 import './App.css'
 import MapComponent from './map/MapComponent.tsx'
 import Diagram from './metrics/Diagram.tsx'
+import AccumulatedData from './AccumulatedData.tsx'
 
 import { useState, useEffect } from 'react'
 
@@ -9,7 +10,7 @@ type ClickInfo = { lng: number; lat: number; firstLayer: any; }
 
 function App() {
   const [clickInfo, setClickInfo] = useState<ClickInfo | null>(null);
-  const [chartData, setChartData] = useState(new Map());
+  const [chartData, setChartData] = useState<Map<string, {time: Date, data: any}>>(new Map());
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -21,8 +22,8 @@ function App() {
       .then((res) => res.json())
       .then((json) => {
         for (let elem of json) {
-          let prod = elem['product'];
-          let time = elem['time'];
+          let prod: string = elem['product'];
+          let time: Date = new Date(elem['time']);
           let data = elem['data'];
 
           if(data != null) {
@@ -47,7 +48,10 @@ function App() {
       <div className="column">
         <MapComponent clickInfo={clickInfo} setClickInfo = {setClickInfo}/>
       </div>
-      <div className="column"><Diagram chartData = {chartData} isLoading = {isLoading}/></div>
+      <div className="column">
+        <Diagram chartData = {chartData} isLoading = {isLoading}/>
+        {/* <AccumulatedData /> */}
+      </div>
     </>
   )
 }

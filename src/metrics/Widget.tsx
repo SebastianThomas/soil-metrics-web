@@ -17,7 +17,7 @@ const chartFuncs = {
 
 
 
-function Widget({ chartData, isLoading }: any) {
+function Widget({ chartData, isLoading }: {chartData: Map<string, {time: Date, data: any}>, isLoading: boolean}) {
   const [showEffects, setShowEffects] = useState(false);
   const [type, setType] = useState("CLIMATE_PRECIPITATION");
 

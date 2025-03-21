@@ -1,6 +1,6 @@
 import Widget from './Widget'
 
-function Diagram({chartData, isLoading} : any) {
+function Diagram({chartData, isLoading} : {chartData: Map<string, {time: Date, data: any}>, isLoading: boolean}) {
     return (
         <>
         <Widget chartData = {chartData} isLoading = {isLoading}/>
