@@ -170,7 +170,6 @@ function MapComponent({ setClickInfo }: any) {
             }
             setClickInfo({ lng, lat });
         }
-        }
         
 
     };
