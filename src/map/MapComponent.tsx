@@ -6,7 +6,7 @@ import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
 import "maplibre-gl/dist/maplibre-gl.css";
 
 
-function MapComponent({ clickInfo, setClickInfo }: any) {
+function MapComponent({ setClickInfo }: any) {
 
     const [mapStyle, setMapStyle] = useState(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
@@ -183,7 +183,7 @@ function MapComponent({ clickInfo, setClickInfo }: any) {
                         latitude: 16.60504099204053,
                         zoom: 6.2,
                     }}
-                    style={{ width: '90%', height: '450px', overflow: 'hidden' }}
+                    style={{ width: '90%', height: '70vh', overflow: 'hidden' }}
 
                     mapStyle={mapStyle}
                     attributionControl={false}

@@ -1,7 +1,7 @@
 import './App.css'
 import MapComponent from './map/MapComponent.tsx'
 import Diagram from './metrics/Diagram.tsx'
-import AccumulatedData from './AccumulatedData.tsx'
+// import AccumulatedData from './AccumulatedData.tsx'
 
 import { useState, useEffect } from 'react'
 
@@ -30,8 +30,9 @@ function App() {
             if(!nwMap.has(prod)) {
               nwMap.set(prod, []);
             }
-
-            nwMap.get(prod).push({"time": time, "data":data});
+            let year = new Date(time).getFullYear(); 
+            nwMap.get(prod).push({"time": time, "data":data, "year": year});
+            
           }
         }
       })
