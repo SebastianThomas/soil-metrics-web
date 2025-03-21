@@ -7,7 +7,7 @@ import "../App.css"
 
 const chartFuncs = {
   'climate precipitation': 'CLIMATE_PRECIPITATION',
-  'population density': 'POPULATION_DENSITY',
+ // 'population density': 'POPULATION_DENSITY',
   'land cover type' : 'LCT',
   'gross primary product': 'GP'
 }

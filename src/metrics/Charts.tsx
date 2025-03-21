@@ -27,8 +27,6 @@ export function LChart({data}:any) {
 
 
 export function BChart({data} : any) {
-  console.log(data);
-
   const customTickFormatter = (value:number) => {
     const labels = ["Barren", "Urban / Built-up","Croplands", "Grasslands", "Open Shrublands", ""];
     return labels[value];

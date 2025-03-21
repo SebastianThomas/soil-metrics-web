@@ -21,6 +21,8 @@ function MapComponent({ setClickInfo }: any) {
 
    const markerRef = useRef<maplibregl.Popup | null>(null);
 
+   const [markerPoint, setMarkerPoint] = useState<maplibregl.Point | null>(null);
+
     const [mapinfo, setMapInfo] = useState<MapInfo | null>(null);
     const [index_info, setIndexInfo] = useState<Year_index>();
 
@@ -126,7 +128,14 @@ function MapComponent({ setClickInfo }: any) {
         const index = parseInt(event.target.value, 10);
         setIndexInfo({ index_year: index });
 
+
         loadMapFromSource(index);
+        if(mapRef.current && markerRef.current && markerRef.current?.isOpen()) {
+            let features = mapRef.current.queryRenderedFeatures(markerPoint!);
+            const risk = features[0].properties.rank;
+
+            markerRef.current.setHTML(`<h4 style="color: black; align: 'center' ">Risk Level ${6 - risk}</h4>`);
+        }
     };
 
 
@@ -138,10 +147,8 @@ function MapComponent({ setClickInfo }: any) {
         const { lng, lat } = event.lngLat;
         setMapInfo({ map_arg: event });
         setClickInfo({ lng, lat, firstLayer });
-        console.log("Clicked at:", lng, lat);
-        console.log("First Layer:", firstLayer);
-        const feature = event.target.queryRenderedFeatures(event.point)[0];
-        console.log("features: ", feature);
+
+        //const feature = event.target.queryRenderedFeatures(event.point)[0];
         
         if (markerRef.current) {
             markerRef.current.remove();
@@ -149,7 +156,9 @@ function MapComponent({ setClickInfo }: any) {
         let features = event.target.queryRenderedFeatures(event.point);
         if(features.length >= 1) {
             const risk = features[0].properties.rank;
+
             if((risk >= 1 && risk <= 5)){
+            setMarkerPoint(event.point);
             //if (marker) marker.remove();
             markerRef.current = new maplibregl.Popup({
                 closeButton: true, closeOnClick: false, maxWidth: "100px", // Limit the width of the popup
@@ -160,6 +169,7 @@ function MapComponent({ setClickInfo }: any) {
                 .addTo(mapRef.current); // Add marker to the map
             }
             setClickInfo({ lng, lat });
+        }
         }
         
 
@@ -201,7 +211,7 @@ function MapComponent({ setClickInfo }: any) {
                     initialViewState={{ // 16.60504099204053, -11.79772412619621
                         longitude: -11.79772412619621,
                         latitude: 16.60504099204053,
-                        zoom: 6.2,
+                        zoom: 6.9,
                     }}
                     style={{ width: '90%', height: '70vh', overflow: 'hidden' }}
 
