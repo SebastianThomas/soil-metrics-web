@@ -1,4 +1,4 @@
-import { LineChart, BarChart, Rectangle, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, BarChart,  Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export function LChart({data}:any) {
     return (
@@ -15,7 +15,7 @@ export function LChart({data}:any) {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
+            <XAxis dataKey="year" />
             <YAxis />
             <Tooltip />
             <Legend />
@@ -26,7 +26,6 @@ export function LChart({data}:any) {
 }
 
 export function BChart({data} : any) {
-  console.log("bchart:", data);
   return (
     <ResponsiveContainer width="100%" height={400}>
         <BarChart
@@ -41,11 +40,11 @@ export function BChart({data} : any) {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="time" />
+          <XAxis dataKey="year" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="data" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+          
         </BarChart>
       </ResponsiveContainer>
   );
