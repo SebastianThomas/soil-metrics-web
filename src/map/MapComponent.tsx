@@ -167,7 +167,7 @@ function MapComponent({ setClickInfo }: any) {
                         latitude: 16.60504099204053,
                         zoom: 6.2,
                     }}
-                    style={{ width: '90%', height: '450px', overflow: 'hidden' }}
+                    style={{ width: '90%', height: '70vh', overflow: 'hidden' }}
 
                     mapStyle={mapStyle}
                     attributionControl={false}
