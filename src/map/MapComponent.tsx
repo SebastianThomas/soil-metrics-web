@@ -6,7 +6,7 @@ import Map, { MapEvent, MapLayerMouseEvent } from 'react-map-gl/maplibre';
 
 
 
-function MapComponent({ clickInfo, setClickInfo }: any) {
+function MapComponent({ setClickInfo }: any) {
 
     const [mapStyle, setMapStyle] = useState(null);
 
