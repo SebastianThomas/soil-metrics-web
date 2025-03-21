@@ -21,9 +21,10 @@ function App() {
       fetch(`https://start-hack-ws-dev.sthomas.ch/v1/point-data?x=${clickInfo?.lng}&y=${clickInfo?.lat}`)
       .then((res) => res.json())
       .then((json) => {
+        console.log("json:", json);
         for (let elem of json) {
           let prod: string = elem['product'];
-          let time: Date = new Date(elem['time']);
+          let time = elem['time'];
           let data = elem['data'];
 
           if(data != null) {
@@ -31,7 +32,24 @@ function App() {
               nwMap.set(prod, []);
             }
             let year = new Date(time).getFullYear(); 
-            nwMap.get(prod).push({"time": time, "data":data, "year": year});
+            if(prod == 'LCT') {
+              let cat = 0;
+              if(data == 'Open Shrublands') {
+                cat = 4;
+              }else if (data == "Grasslands") {
+                cat = 3;
+              }else if(data == "Croplands") {
+                cat = 2;
+              }else if(data == "Urban and Built-up Lands") {
+                cat = 1;
+              }else{
+                cat = 0;
+              }
+              nwMap.get(prod).push({"time": time, "data":data, "year": year, "category": cat});
+            }else{
+              nwMap.get(prod).push({"time": time, "data":data, "year": year});
+            }
+
             
           }
         }

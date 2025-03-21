@@ -10,11 +10,9 @@
 body {
     background-color: var(--bg-color);
     color: var(--font-color);
-
 }
 .text{
     color: var(--font-color);
-    
     
 }
 option {
@@ -25,6 +23,7 @@ option {
 
 
 select {
+  font-size: medium;
     /* Reset Select */
     appearance: none;
     outline: 10px red;
@@ -46,7 +45,7 @@ select {
   .select {
     position: relative;
     display: flex;
-    width: 12em;
+    width: 15em;
     height: 3em;
     border-radius: .25em;
     overflow: hidden;
@@ -105,6 +104,7 @@ select {
     height: 25px; /* Slider handle height */
     background: #04AA6D; /* Green background */
     cursor: pointer; /* Cursor on hover */
+    border-radius: 2px;
   }
   .slider::-moz-range-thumb {
     width: 25px; /* Set a specific slider handle width */
@@ -124,6 +124,7 @@ select {
     border-radius: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--color4);
+    margin-bottom: 3%;
 }
 
 
