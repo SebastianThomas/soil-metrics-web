@@ -6,21 +6,16 @@ K3s manifests for the `soil-metrics-web` SPA. Deploys into namespace
 
 ## Routing
 
-`soil-metrics-web.sthomas.ch` (one HTTPRoute, `httproute.yaml`), same-origin so
-the browser never does CORS:
-
-| path | backend |
-|---|---|
-| `/v1/*` | `start-hack-ws` (API, backend repo) |
-| `/public/*` | `start-hack-ws` (derived geojson) |
-| `/*` | `soil-metrics-web` (this SPA) |
+`httproute.yaml` serves this SPA on **`soil-metrics.sthomas.ch`** and
+**`soil-metrics-web.sthomas.ch`** (both, one HTTPRoute).
 
 The API base URL is baked at build time from `.env.production`
-(`VITE_API_URL=https://soil-metrics-web.sthomas.ch`). `.env.development` points
-at `http://localhost:8080` for `npm run dev`.
+(`VITE_API_URL=https://soil-metrics-ws.sthomas.ch`) — the API + datasets host,
+owned by the `start-hack` backend repo. `/v1/**` and `/public/**` send CORS `*`
+there. `.env.development` points at `http://localhost:8080` for `npm run dev`.
 
-`soil-metrics-public.sthomas.ch` (the standalone public dataset endpoint) is a
-separate HTTPRoute in the backend repo.
+`soil-metrics-public.sthomas.ch` (standalone public dataset endpoint) is also
+in the backend repo.
 
 ## Workflows
 
