@@ -1,0 +1,26 @@
+---
+# soil-metrics-web.sthomas.ch - the app. Same-origin routing so there's no CORS:
+#   /v1/*     -> the backend API      (start-hack-ws, from the start-hack-backend repo)
+#   /public/* -> the backend datasets (start-hack-ws serves /public/**)
+#   /*        -> this SPA
+# Traefik is the public edge; the *.sthomas.ch wildcard cert covers this.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: soil-metrics-web
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: kube-system
+  hostnames:
+    - soil-metrics-web.sthomas.ch
+  rules:
+    - matches:
+        - path: { type: PathPrefix, value: /v1 }
+        - path: { type: PathPrefix, value: /public }
+      backendRefs:
+        - name: start-hack-ws
+          port: 80
+    - backendRefs:
+        - name: soil-metrics-web
+          port: 80

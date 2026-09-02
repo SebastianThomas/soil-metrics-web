@@ -18,7 +18,7 @@ function App() {
       console.log('loading');
       setLoading(true);
       let nwMap = new Map();
-      fetch(`https://start-hack-ws-dev.sthomas.ch/v1/point-data?x=${clickInfo?.lng}&y=${clickInfo?.lat}`)
+      fetch(`${import.meta.env.VITE_API_URL}/v1/point-data?x=${clickInfo?.lng}&y=${clickInfo?.lat}`)
       .then((res) => res.json())
       .then((json) => {
         console.log("json:", json);

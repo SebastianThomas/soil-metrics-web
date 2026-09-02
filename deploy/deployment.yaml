@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soil-metrics-web
+  labels: { app: soil-metrics-web }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: soil-metrics-web }
+  template:
+    metadata:
+      labels: { app: soil-metrics-web }
+    spec:
+      containers:
+        - name: web
+          image: ${WEB_IMAGE}
+          ports:
+            - { containerPort: 80 }
+          readinessProbe:
+            httpGet: { path: /, port: 80 }
+            initialDelaySeconds: 3
+          livenessProbe:
+            httpGet: { path: /, port: 80 }
+            initialDelaySeconds: 10
+          resources:
+            requests: { cpu: 10m, memory: 24Mi }
+            limits: { memory: 64Mi }

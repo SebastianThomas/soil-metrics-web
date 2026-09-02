@@ -185,7 +185,7 @@ function MapComponent({ setClickInfo }: any) {
         if (!geoLoaded.current) {
             geoLoaded.current = true;
             YEARS.forEach(year => {
-                fetch(`https://start-hack-public-dev.sthomas.ch/gpp-ranking-${year}.geojson`) // gpp-ranking-YEAR.geojson
+                fetch(`${import.meta.env.VITE_API_URL}/public/gpp-ranking-${year}.geojson`) // gpp-ranking-YEAR.geojson
                     .then(res => res.json())
                     .then(data => setGeojsonData(prev => ({ ...prev, [year]: data })))
                     .catch(err => console.error(`Failed to load ${year}`, err)).finally(() =>{

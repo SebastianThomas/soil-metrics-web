@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: soil-metrics-web
+spec:
+  selector: { app: soil-metrics-web }
+  ports:
+    - { port: 80, targetPort: 80 }

@@ -1,14 +1,14 @@
+# ---------- build ----------
 FROM node:22-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm i
+RUN npm ci
 COPY . .
-RUN npm run build
+RUN npm run build           # Vite mode "production" -> .env.production (VITE_API_URL)
 
-FROM ubuntu:24.10
-RUN apt-get update
-RUN apt-get install nginx -y
-WORKDIR /app
-COPY --from=build /app/dist /var/www/html/
+# ---------- serve ----------
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-CMD ["nginx","-g","daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
