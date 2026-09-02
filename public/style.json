@@ -17,11 +17,11 @@
     },
     "districts": {
       "type": "geojson",
-      "data": "https://start-hack-public-dev.sthomas.ch/districts.geojson"
+      "data": "https://soil-metrics-public.sthomas.ch/districts.geojson"
     },
     "waterways": {
       "type": "geojson",
-      "data": "https://start-hack-public-dev.sthomas.ch/assaba-waterways.geojson"
+      "data": "https://soil-metrics-public.sthomas.ch/assaba-waterways.geojson"
     }
   },
   "sprite": "https://openmaptiles.github.io/maptiler-basic-gl-style/sprite",
