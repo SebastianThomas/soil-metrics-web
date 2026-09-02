@@ -52,6 +52,7 @@ function Widget({ chartData, isLoading, startType}: {chartData: Map<string, {tim
             ))}
           </select>
         </div>
+        {chartData === undefined && <div>No Data</div>}
         {type === "LCT" ? (
           <BChart data={chartData.get(type)} />
         ) : (
