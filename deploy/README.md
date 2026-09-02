@@ -25,9 +25,10 @@ separate HTTPRoute in the backend repo.
 ## Workflows
 
 - `Docker Image CI` (`docker_image.yaml`) — builds `sthomasch/soil-metrics-web`
-  on a `v*` tag push.
-- `deploy` (`deploy.yaml`) — auto-deploys after that build when the tag is
-  reachable from `main`; `gh workflow run deploy.yaml -f tag=v1.2.3` otherwise.
+  on a `v*` tag push, then calls `deploy.yaml`.
+- `deploy` (`deploy.yaml`) — reusable (`workflow_call`) + `workflow_dispatch`.
+  Run standalone with `gh workflow run deploy.yaml -f tag=v1.2.3` to redeploy any
+  already-built tag.
 
 Both need the repo secrets `KUBE_API`, `KUBE_CA`, `KUBE_TOKEN`, `HEADSCALE_URL`,
 `TS_AUTHKEY`, `DOCKER_HUB_USERNAME`, `DOCKER_HUB_ACCESS_TOKEN` and a `prod`

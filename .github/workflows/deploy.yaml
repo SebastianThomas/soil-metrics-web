@@ -1,77 +1,35 @@
 name: deploy
-run-name: "deploy @ ${{ inputs.tag || github.event.workflow_run.head_branch }}"
+run-name: "deploy @ ${{ inputs.tag }}"
 
-# One deployment (namespace start-hack).
-#   - after "Docker Image CI" builds a v* tag -> auto-deploy if reachable from main
-#   - manual dispatch -> deploy a given tag
+# Deploy the soil-metrics-web SPA to K3s (namespace start-hack).
+#   - called by "Docker Image CI" right after it pushes the image for a v* tag
+#   - or run manually ("Run workflow") against any already-built tag
 on:
-  workflow_run:
-    workflows: ["Docker Image CI"]
-    types: [completed]
+  workflow_call:
+    inputs:
+      tag:
+        description: Tag to deploy (image must already be built, e.g. v1.2.3)
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       tag:
-        description: Tag to deploy (image must exist, e.g. v1.2.3)
+        description: Tag to deploy (image must already be built, e.g. v1.2.3)
         required: true
         type: string
 
 concurrency:
-  group: deploy
+  group: deploy-soil-metrics-web
   cancel-in-progress: false
 
 jobs:
-  gate:
-    runs-on: ubuntu-latest
-    outputs:
-      proceed: ${{ steps.check.outputs.proceed }}
-      ref: ${{ steps.check.outputs.ref }}
-    steps:
-      - id: pre
-        env:
-          EVENT: ${{ github.event_name }}
-          WR_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
-          WR_BRANCH: ${{ github.event.workflow_run.head_branch }}
-          IN_TAG: ${{ inputs.tag }}
-        run: |
-          set -euo pipefail
-          if [ "$EVENT" = workflow_dispatch ]; then
-            echo "ref=$IN_TAG" >> "$GITHUB_OUTPUT"; echo "run=true" >> "$GITHUB_OUTPUT"
-          elif [ "$WR_CONCLUSION" = success ] && [[ "$WR_BRANCH" == v* ]]; then
-            echo "ref=$WR_BRANCH" >> "$GITHUB_OUTPUT"; echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "::notice::build was ${WR_CONCLUSION} for '${WR_BRANCH}' - not deploying"; echo "run=false" >> "$GITHUB_OUTPUT"
-          fi
-      - if: steps.pre.outputs.run == 'true'
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.pre.outputs.ref }}
-          fetch-depth: 0
-      - id: check
-        if: steps.pre.outputs.run == 'true'
-        env:
-          EVENT: ${{ github.event_name }}
-          REF: ${{ steps.pre.outputs.ref }}
-        run: |
-          set -euo pipefail
-          echo "ref=$REF" >> "$GITHUB_OUTPUT"
-          if [ "$EVENT" = workflow_dispatch ]; then echo "proceed=true" >> "$GITHUB_OUTPUT"; exit 0; fi
-          git fetch origin main --quiet
-          if git merge-base --is-ancestor HEAD origin/main; then
-            echo "proceed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "proceed=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::$REF is not reachable from main - not auto-deploying"
-          fi
-
   deploy:
-    needs: gate
-    if: needs.gate.outputs.proceed == 'true'
     runs-on: ubuntu-latest
     environment: prod
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.gate.outputs.ref }}
+          ref: ${{ inputs.tag }}
 
       - uses: SebastianThomas/homelab-actions/headscale-connect@v1
         with:
@@ -87,6 +45,6 @@ jobs:
           namespace: start-hack
           manifests: deploy
           images: |
-            WEB_IMAGE=sthomasch/soil-metrics-web:${{ needs.gate.outputs.ref }}
+            WEB_IMAGE=sthomasch/soil-metrics-web:${{ inputs.tag }}
           rollout: deployment/soil-metrics-web
           rollout-timeout: 180s

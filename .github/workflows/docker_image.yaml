@@ -29,3 +29,14 @@ jobs:
             sthomasch/soil-metrics-web:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  # Roll the freshly-pushed image out to K3s. Tag builds only; a manual
+  # dispatch from a branch just publishes :latest. deploy.yaml also runs
+  # standalone ("Run workflow") to redeploy any already-built tag.
+  deploy:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    uses: ./.github/workflows/deploy.yaml
+    with:
+      tag: ${{ github.ref_name }}
+    secrets: inherit
