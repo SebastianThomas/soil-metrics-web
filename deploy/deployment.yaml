@@ -3,14 +3,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: soil-metrics-web
-  labels: { app: soil-metrics-web }
+  labels: 
+    app: soil-metrics-web
+    app.kubernetes.io/name: soil-metrics-web
 spec:
   replicas: 1
   selector:
     matchLabels: { app: soil-metrics-web }
   template:
     metadata:
-      labels: { app: soil-metrics-web }
+      labels:
+        app: soil-metrics-web
+        app.kubernetes.io/name: soil-metrics-web
     spec:
       containers:
         - name: web
